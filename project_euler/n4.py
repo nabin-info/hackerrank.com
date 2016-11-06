@@ -1,34 +1,35 @@
-#!/usr/bin/python
+#!/bin/python
 
 import sys
 import math
 
-def _pal(n):
-    s = str(n)
-    l = len(s) / 2
-    s = s[:l] + s[l-1::-1]
-    if int(s) > n:
-        s = str(int(s[:l]) - 1)
-        s = s[:l] + s[l-1::-1]
+def _pal2(n):
+    h = n / 1000 + 1
     while True:
-        yield int(s)
-        s = str(int(s[:l]) - 1)
-        s = s[:l] + s[l-1::-1]
+        p = str(h)
+        p += p[2::-1]
+        yield int(p)
+        h -= 1
+
+def ifact(i):
+    f1 = int(math.sqrt(float(i))) + 1
+    while f1 > 99:
+        f2,r = divmod(i,f1)
+        if f2 > 999:
+            return None
+        if r == 0:
+            return (f1,f2)
+        f1 -= 1
+    return None
 
 T = int(raw_input().strip())
 for t in range(T):
     N = int(raw_input().strip())
-    pal = _pal(N)
-    while pal:
-        x = pal.next()
-        f1 = int(math.sqrt(x))
-        while f1 > 100:
-            f2,r = divmod(x,f1)
-            if f2 > 999:
-                break
-            if r == 0:
-                print x
-                pal = None
-                break
-            f1 -= 1
-    
+    for x in _pal2(N):
+        if x >= N:
+            continue
+        facts = ifact(x)
+        if facts:
+            print x
+            break 
+            
