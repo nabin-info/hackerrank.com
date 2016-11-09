@@ -1,7 +1,10 @@
 #!/usr/bin/python
 
 import sys
-import math
+
+def input_arg(tr=str): return tr(raw_input().strip())
+def input_args(tr=str): return map(tr, list(input_arg().split(' ')))
+def input_arglines(n,tr=str): return [input_arg(tr) for x in range(n)]
 
 def cktri(n):
     g = -1
@@ -16,8 +19,8 @@ def cktri(n):
         c = n - b - a
     return g
 
-T = int(raw_input().strip())
-for t in range(T):
-    N = int(raw_input().strip())
-    print cktri(N)
+T = input_arg(int)
+N = input_arglines(T,int)
+for n in N:
+    print cktri(n)
     
